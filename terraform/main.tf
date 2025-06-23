@@ -7,7 +7,8 @@ module "vpc-dev" { #название модуля
 }
 
 module "module-srv-vm01" {
-  source         = "git::https://github.com/olegveselov1984/yandex_compute_instance.git?ref=main"
+  #source         = "git::https://github.com/olegveselov1984/yandex_compute_instance.git?ref=main"
+  source         = "./module-srv-vm"
   network_id     = module.vpc-dev.network_id 
   subnet_zones   = ["ru-central1-a","ru-central1-b"]
   subnet_ids     = [module.vpc-dev.subnet_id] 
