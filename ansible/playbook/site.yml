@@ -11,7 +11,7 @@
         - clickhouse
         - start service
   tasks:
-    - block: #Нужен, поскольку есть "rescue - что не отработало в 01 будет работать в 02" 
+    - block: #Нужен, поскольку есть "rescue - что не отработало в 01 будет работать в 02"
        - name: Get clickhouse distrib01
          ansible.builtin.get_url:
             url: "https://packages.clickhouse.com/rpm/stable/{{ item }}-{{ clickhouse_version }}.noarch.rpm"
@@ -29,7 +29,7 @@
             mode: '0644' # Права выжны!
          tags:
             - clickhouse
-            - distr 
+            - distr
 
        - name: Install clickhouse packages
          become: true
@@ -57,8 +57,8 @@
          tags:
             - clickhouse
             - db
-          
-  
+
+
 - name: Install Vector
   hosts: vector
   become: true
@@ -126,25 +126,25 @@
 # ######################################################
 
 - name: Install nginx+epel-release
-  hosts: lighthouse  
-  become: true  
+  hosts: lighthouse
+  become: true
   handlers:
     - name: Start nginx service
       ansible.builtin.service:
         name: nginx
         state: restarted
     - name: start-nginx
-      become: true 
+      become: true
       command: nginx
     - name: reload-nginx
-      become: true 
+      become: true
       command: nginx -s reload
 
       tags:
         - nginx
         - start service
 
-  tasks:  
+  tasks:
   # - block:
     - name: Install epel-release
       become: true
@@ -194,7 +194,7 @@
             dest: "{{ lighthouse_dir }}" #тут была ошибка в адресе
             version: master
 
-        - name: Deploy lighthouse configuration 
+        - name: Deploy lighthouse configuration
           become: true
           ansible.builtin.template:
            src: templates/lighthouse.conf.j2
@@ -205,7 +205,7 @@
           ansible.builtin.service:
             name: nginx
             state: restarted
-            tags: Install LightHouse
+          tags: Install LightHouse
 
         # - name: Start nginx service
         #   ansible.builtin.service:
