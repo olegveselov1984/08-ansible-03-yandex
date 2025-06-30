@@ -57,6 +57,7 @@
          tags:
             - clickhouse
             - db
+          
   
 - name: Install Vector
   hosts: vector
