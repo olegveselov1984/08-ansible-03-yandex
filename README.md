@@ -22,26 +22,7 @@
 8. Повторно запустите playbook с флагом `--diff` и убедитесь, что playbook идемпотентен.
 9. Подготовьте README.md-файл по своему playbook. В нём должно быть описано: что делает playbook, какие у него есть параметры и теги.
 10. Готовый playbook выложите в свой репозиторий, поставьте тег `08-ansible-03-yandex` на фиксирующий коммит, в ответ предоставьте ссылку на него.
-
+https://github.com/olegveselov1984/08-ansible-03-yandex/tree/HW01
 ---
 
-### Как оформить решение задания
-
-Выполненное домашнее задание пришлите в виде ссылки на .md-файл в вашем репозитории.
-
----
-ansible lighthouse-01 -m ping
-
-Эта задача будет выполнена от имени root, поскольку root является пользователем по умолчанию для повышения привилегий:
-
-- do: something
-  become: true
-Эта задача будет выполнена от имени пользователя someone, поскольку пользователь указан явно:
-
-- do: something
-  become: true
-  become_user: someone
-Эта задача ничего не сделает с become_user, потому что become не задан и по умолчанию равен false/no:
-
-- do: something
-  become_user: someone
+![image](https://github.com/user-attachments/assets/d761824f-fdad-40a4-952c-5e4f1094ed8f)
