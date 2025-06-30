@@ -31,10 +31,6 @@
             - clickhouse
             - distr 
 
-      #  - name: Update apt cache
-      #    ansible.builtin.apt:
-      #      update_cache: true
-
        - name: Install clickhouse packages
          become: true
          ansible.builtin.yum:
@@ -48,7 +44,6 @@
             - distr
 
        - name: Flush handlers
-#         meta: flush_handlers
          ansible.builtin.meta: flush_handlers
          tags:
             - clickhouse
@@ -66,10 +61,8 @@
 - name: Install Vector
   hosts: vector
   become: true
-#  gather_facts: false
   handlers:
     - name: Start vector service
- #     become: true
       ansible.builtin.service:
         name: vector
         state: restarted
@@ -99,11 +92,24 @@
         - vector
         - distr
 
+    - name: Vector | Сonfig Service Vector
+      become: true
+      ansible.builtin.template:
+        src: vector.service.j2
+        dest: /usr/lib/systemd/system/vector.service
+        mode: "0644"
+
+    - name: Vector | Create a directory if it does not exist
+      ansible.builtin.file:
+        path: "{{ vector_config_dir }}"
+        state: directory
+        mode: "0755"
+
     - name: Deploy vector configuration
       become: true
       ansible.builtin.template:
         src: templates/vector.yaml.j2
-        dest: "{{ vector_config_path }}"
+        dest: "{{ vector_config_dir }}/vector.yml"
         mode: "0644"
       notify: Start vector service
       tags:
@@ -156,7 +162,6 @@
       become: true
       ansible.builtin.template:
         src: templates/nginx.conf.j2
-  #      dest:  "{{ nginx_config_path }}" 
         dest:  /etc/nginx/nginx.conf
         mode: '0644'
       notify: Start nginx service
@@ -181,16 +186,12 @@
             state: latest
 
   tasks:
-        - name: Remove default nginx site
-          ansible.builtin.file:
-            path: //var/www/html/index.nginx-debian.html
-            state: absent
-
-        - name: Git clone
+        - name: Lighthouse cloned
+          become: true
           ansible.builtin.git:
-            repo: https://github.com/VKCOM/lighthouse
+            repo: "{{ lighthouse_vcs }}"
+            dest: "{{ lighthouse_dir }}" #тут была ошибка в адресе
             version: master
-            dest: /var/www/html/lighthouse
 
         - name: Deploy lighthouse configuration 
           become: true
@@ -203,7 +204,7 @@
           ansible.builtin.service:
             name: nginx
             state: restarted
-        #     tags: Install LightHouse
+            tags: Install LightHouse
 
         # - name: Start nginx service
         #   ansible.builtin.service:

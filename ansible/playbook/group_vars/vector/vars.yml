@@ -1,7 +1,4 @@
 ---
-  vector_version: "0.22.3"
-  vector_config_path: "/etc/vector/vector.yaml"
-  clickhouse_database: "sample"
-  clickhouse_table: "log"
-  clickhouse_user: "db_user"
-  clickhouse_host: "http://10.0.1.28:8123"
+vector_version: "0.30.0"
+vector_config_dir: "{{ ansible_user_dir }}/vector_config"
+vector_config:

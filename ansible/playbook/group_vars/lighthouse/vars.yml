@@ -1,4 +1,4 @@
 ---
-nginx_user_name: root
-lighthouse_access_log_name: lighthouse
-lighthouse_location_dir: /var/www/lighthouse
+lighthouse_vcs: https://github.com/VKCOM/lighthouse.git
+lighthouse_dir: /usr/lighthouse
+lighthouse_nginx_user: ubuntu
